@@ -81,4 +81,4 @@ Created as a portfolio project for demonstrating front-end web development skill
 
 ## Contact
 
-[Your Name] - [your.email@example.com]
+Samuel Danziger - smdanziger@gmail.com
