@@ -7,7 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="theme-toggle">
+        <label class="switch">
+            <input type="checkbox" id="theme-switch">
+            <span class="slider round"></span>
+        </label>
+        <span class="toggle-label">Night Mode</span>
+    </div>
+    
     <h1>Tic-Tac-Toe</h1>
+    
+    <div class="game-controls">
+        <button id="color-settings-btn">Color Settings</button>
+    </div>
+    
     <div class="status" id="status">Player X's turn</div>
     <div class="board" id="board">
         <div class="cell" data-index="0"></div>
@@ -23,5 +36,49 @@
     <button id="restart">Restart Game</button>
 
     <script src="script.js"></script>
+    
+    <!-- Color Settings Modal -->
+    <div id="color-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Color Settings</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="color-selectors">
+                    <div class="player-colors">
+                        <label for="x-color-select">Player X Color:</label>
+                        <div class="select-wrapper">
+                            <select id="x-color-select" class="color-select">
+                                <option value="#e74c3c">Red</option>
+                                <option value="#9b59b6">Purple</option>
+                                <option value="#2ecc71">Green</option>
+                                <option value="#f1c40f">Yellow</option>
+                                <option value="#e67e22">Orange</option>
+                            </select>
+                            <div class="color-preview" id="x-color-preview"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="player-colors">
+                        <label for="o-color-select">Player O Color:</label>
+                        <div class="select-wrapper">
+                            <select id="o-color-select" class="color-select">
+                                <option value="#3498db">Blue</option>
+                                <option value="#1abc9c">Teal</option>
+                                <option value="#e74c3c">Red</option>
+                                <option value="#f39c12">Amber</option>
+                                <option value="#8e44ad">Violet</option>
+                            </select>
+                            <div class="color-preview" id="o-color-preview"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-colors-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

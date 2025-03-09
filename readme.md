@@ -1,4 +1,13 @@
-# Tic-Tac-Toe Game
+## How to Use
+
+1. **Start a New Game**: The game starts automatically when the page loads. Player X goes first.
+2. **Make a Move**: Click on any empty cell to place your mark (X or O).
+3. **Win the Game**: Connect three of your marks horizontally, vertically, or diagonally to win.
+4. **Restart**: Click the "Restart Game" button to start a new game at any time.
+5. **Change Theme**: Toggle between light and dark mode using the switch in the top-right corner.
+6. **Customize Colors**: Click the "Color Settings" button to open a modal where you can choose custom colors for both players.
+
+The game automatically saves your theme preference and color choices for future visits.# Tic-Tac-Toe Game
 
 A simple, interactive Tic-Tac-Toe game built with HTML, CSS, and JavaScript.
 
@@ -17,6 +26,9 @@ This project is a classic two-player Tic-Tac-Toe game implemented as a web appli
 - Game state tracking
 - Restart functionality
 - Responsive design
+- Dark/light theme toggle with preference saving
+- Customizable player colors via a modal interface
+- Settings persistence using localStorage
 
 ## Technologies Used
 
@@ -56,6 +68,8 @@ Potential improvements and additions to the game:
 - Difficulty levels
 - Game timer
 - Alternate themes or skins
+- Game history and replay feature
+- Multiplayer over network
 
 ## License
 
@@ -67,4 +81,4 @@ Created as a portfolio project for demonstrating front-end web development skill
 
 ## Contact
 
-Samuel Danziger - smdanziger@gmail.com
+[Your Name] - [your.email@example.com]

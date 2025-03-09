@@ -7,11 +7,22 @@ body {
     height: 100vh;
     background-color: #f5f5f5;
     margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+    background-color: #222;
+    color: #f5f5f5;
 }
 
 h1 {
     color: #333;
     margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode h1 {
+    color: #f5f5f5;
 }
 
 .status {
@@ -19,6 +30,152 @@ h1 {
     margin-bottom: 20px;
     font-weight: bold;
     color: #555;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .status {
+    color: #ccc;
+}
+
+/* Color Selectors */
+.color-selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+body.dark-mode .color-selectors {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.player-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.player-colors label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.select-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.color-select {
+    flex: 1;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: white;
+    font-family: 'Arial', sans-serif;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .color-select {
+    background-color: #444;
+    color: #fff;
+    border-color: #555;
+}
+
+.color-select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+}
+
+.color-preview {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    margin-left: 10px;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+}
+
+body.dark-mode .color-preview {
+    border-color: #555;
+}
+
+/* Theme Toggle Switch */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-label {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .toggle-label {
+    color: #ccc;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #3498db;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #3498db;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 
 .board {
@@ -27,6 +184,147 @@ h1 {
     grid-template-rows: repeat(3, 100px);
     gap: 8px;
     margin-bottom: 20px;
+}
+
+/* Game Controls */
+.game-controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#color-settings-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#color-settings-btn:hover {
+    background-color: #2980b9;
+}
+
+body.dark-mode #color-settings-btn {
+    background-color: #2980b9;
+}
+
+body.dark-mode #color-settings-btn:hover {
+    background-color: #1a5276;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s;
+    overflow: auto; /* Enable scroll if needed */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 0;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.3s;
+}
+
+body.dark-mode .modal-content {
+    background-color: #333;
+    color: #f5f5f5;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+body.dark-mode .modal-header {
+    border-bottom: 1px solid #555;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+body.dark-mode .modal-header h2 {
+    color: #f5f5f5;
+}
+
+.close {
+    color: #aaa;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close:hover {
+    color: #333;
+}
+
+body.dark-mode .close:hover {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding-top: 15px;
+    text-align: right;
+}
+
+#save-colors-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#save-colors-btn:hover {
+    background-color: #27ae60;
+}
+
+body.dark-mode #save-colors-btn {
+    background-color: #27ae60;
+}
+
+body.dark-mode #save-colors-btn:hover {
+    background-color: #1e8449;
 }
 
 .cell {
@@ -41,7 +339,12 @@ h1 {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s;
+    transition: all 0.2s, background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .cell {
+    background-color: #444;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .cell:hover {
@@ -49,12 +352,25 @@ h1 {
     transform: scale(1.05);
 }
 
+body.dark-mode .cell:hover {
+    background-color: #555;
+}
+
+/* Player colors will be applied dynamically with JavaScript */
 .cell.x {
-    color: #e74c3c;
+    color: var(--x-color, #e74c3c);
 }
 
 .cell.o {
-    color: #3498db;
+    color: var(--o-color, #3498db);
+}
+
+body.dark-mode .cell.x {
+    color: var(--x-color-dark, var(--x-color, #ff6b6b));
+}
+
+body.dark-mode .cell.o {
+    color: var(--o-color-dark, var(--o-color, #5dade2));
 }
 
 button {
@@ -70,6 +386,14 @@ button {
 
 button:hover {
     background-color: #2980b9;
+}
+
+body.dark-mode button {
+    background-color: #2980b9;
+}
+
+body.dark-mode button:hover {
+    background-color: #1a5276;
 }
 
 .winner-line {
