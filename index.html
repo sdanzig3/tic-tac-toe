@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Note that the type="module" is crucial for ES6 modules to work -->
+    <script type="module" src="js/main.js"></script>
 </head>
 <body>
     <div class="theme-toggle">
@@ -19,6 +21,7 @@
     
     <div class="game-controls">
         <button id="color-settings-btn">Color Settings</button>
+        <button id="player-names-btn">Player Names</button>
     </div>
     
     <div class="status" id="status">Player X's turn</div>
@@ -34,15 +37,13 @@
         <div class="cell" data-index="8"></div>
     </div>
     <button id="restart">Restart Game</button>
-
-    <script src="script.js"></script>
     
     <!-- Color Settings Modal -->
     <div id="color-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Color Settings</h2>
-                <span class="close">&times;</span>
+                <span class="close" id="close-colors">&times;</span>
             </div>
             <div class="modal-body">
                 <div class="color-selectors">
@@ -76,6 +77,32 @@
                 </div>
                 <div class="modal-footer">
                     <button id="save-colors-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Player Names Modal -->
+    <div id="names-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Player Names</h2>
+                <span class="close" id="close-names">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="name-inputs">
+                    <div class="player-name">
+                        <label for="player-x-name">Player X:</label>
+                        <input type="text" id="player-x-name" class="name-input" placeholder="Enter name">
+                    </div>
+                    
+                    <div class="player-name">
+                        <label for="player-o-name">Player O:</label>
+                        <input type="text" id="player-o-name" class="name-input" placeholder="Enter name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-names-btn">Save</button>
                 </div>
             </div>
         </div>

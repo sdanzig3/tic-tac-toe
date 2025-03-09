@@ -6,8 +6,9 @@
 4. **Restart**: Click the "Restart Game" button to start a new game at any time.
 5. **Change Theme**: Toggle between light and dark mode using the switch in the top-right corner.
 6. **Customize Colors**: Click the "Color Settings" button to open a modal where you can choose custom colors for both players.
+7. **Set Player Names**: Click the "Player Names" button to customize the names of both players.
 
-The game automatically saves your theme preference and color choices for future visits.# Tic-Tac-Toe Game
+The game automatically saves your theme preference, color choices, and player names for future visits.# Tic-Tac-Toe Game
 
 A simple, interactive Tic-Tac-Toe game built with HTML, CSS, and JavaScript.
 
@@ -28,6 +29,7 @@ This project is a classic two-player Tic-Tac-Toe game implemented as a web appli
 - Responsive design
 - Dark/light theme toggle with preference saving
 - Customizable player colors via a modal interface
+- Custom player names
 - Settings persistence using localStorage
 
 ## Technologies Used
@@ -35,6 +37,9 @@ This project is a classic two-player Tic-Tac-Toe game implemented as a web appli
 - HTML5
 - CSS3
 - JavaScript (ES6)
+  - ES6 Modules
+  - localStorage for data persistence
+  - DOM manipulation APIs
 
 ## Project Structure
 
@@ -42,19 +47,51 @@ This project is a classic two-player Tic-Tac-Toe game implemented as a web appli
 tic-tac-toe/
 ├── index.html      # Main HTML file with game structure
 ├── styles.css      # CSS styling for the game
-├── script.js       # JavaScript for game logic
+├── js/             # JavaScript modules folder
+│   ├── main.js            # Entry point, initializes the game
+│   ├── game-logic.js      # Core game mechanics (moves, win detection)
+│   ├── ui-controller.js   # DOM manipulation and event handling
+│   ├── color-settings.js  # Color customization functionality
+│   ├── player-names.js    # Player name customization
+│   └── preferences.js     # localStorage saving/loading
 └── README.md       # Project documentation
 ```
 
+The project uses ES6 modules for better code organization and maintainability.
+
 ## How to Run Locally
 
-1. Clone or download this repository to your local machine
-2. Open the project folder
-3. Double-click on `index.html` to open in your default web browser
+Since this project uses ES6 modules, you need to serve it through a web server rather than opening the HTML file directly. Here are a few ways to do this:
 
-Alternatively:
-- Drag and drop the `index.html` file into an open browser window
-- Or use the "Open File" function in your browser (Ctrl+O or Cmd+O) to navigate to and open the file
+1. **Using http-server (recommended)**:
+   ```bash
+   # Install http-server globally (requires Node.js)
+   npm install -g http-server
+   
+   # Navigate to project directory
+   cd path/to/tic-tac-toe
+   
+   # Start the server
+   http-server
+   
+   # Access the game at http://localhost:8080 (or another port if shown)
+   ```
+
+2. **Using Python's built-in server**:
+   ```bash
+   # Navigate to project directory
+   cd path/to/tic-tac-toe
+   
+   # Start the server (Python 3)
+   python -m http.server
+   
+   # Or for Python 2
+   python -m SimpleHTTPServer
+   ```
+
+3. **Using VS Code Live Server**:
+   - Install the "Live Server" extension
+   - Right-click on `index.html` and select "Open with Live Server"
 
 ## Future Enhancements
 
@@ -64,12 +101,15 @@ Potential improvements and additions to the game:
 - Single-player mode with AI opponent
 - Animations for game actions
 - Sound effects
-- Custom player names
 - Difficulty levels
 - Game timer
 - Alternate themes or skins
 - Game history and replay feature
 - Multiplayer over network
+- Responsive design for mobile devices
+- Local tournament mode
+
+The modular code structure makes it easy to extend the game with these features.
 
 ## License
 
