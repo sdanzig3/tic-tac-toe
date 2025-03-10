@@ -1,22 +1,26 @@
-// Player names customization functionality
-import { getElement, updateGameStatus } from './ui-controller.js';
-import { getCurrentPlayer, isGameActive } from './game-logic.js';
+// player-names.js - Player Names Module
+import { updateGameStatus, getCurrentPlayer, isGameActive } from './game-logic.js';
+import { updatePlayerNames as updateScorePlayerNames } from './score-tracker.js';
+
+console.log("Player names loading");
 
 // Default player names
 let playerXName = 'Player X';
 let playerOName = 'Player O';
 
-// Temporary name storage for the modal
-let tempPlayerXName = playerXName;
-let tempPlayerOName = playerOName;
-
 // Set up player names UI and listeners
 export function setupPlayerNames() {
-    const namesModal = getElement('names-modal');
-    const closeNamesBtn = getElement('close-names');
-    const saveNamesBtn = getElement('save-names-btn');
-    const playerXNameInput = getElement('player-x-name');
-    const playerONameInput = getElement('player-o-name');
+    console.log("Setting up player names");
+    
+    const namesModal = document.getElementById('names-modal');
+    const closeNamesBtn = document.getElementById('close-names');
+    const saveNamesBtn = document.getElementById('save-names-btn');
+    const playerXNameInput = document.getElementById('player-x-name');
+    const playerONameInput = document.getElementById('player-o-name');
+    const playerNamesBtn = document.getElementById('player-names-btn');
+    
+    // Load saved names
+    loadSavedNames();
     
     // Set up event listeners
     if (closeNamesBtn) {
@@ -27,98 +31,86 @@ export function setupPlayerNames() {
         saveNamesBtn.addEventListener('click', savePlayerNames);
     }
     
-    if (playerXNameInput) {
-        playerXNameInput.addEventListener('input', updatePlayerXName);
-    }
-    
-    if (playerONameInput) {
-        playerONameInput.addEventListener('input', updatePlayerOName);
+    if (playerNamesBtn) {
+        playerNamesBtn.addEventListener('click', openNamesModal);
     }
 }
 
 // Open the player names modal
 export function openNamesModal() {
-    const namesModal = getElement('names-modal');
-    const playerXNameInput = getElement('player-x-name');
-    const playerONameInput = getElement('player-o-name');
+    console.log("Opening player names modal");
+    
+    const namesModal = document.getElementById('names-modal');
+    const playerXNameInput = document.getElementById('player-x-name');
+    const playerONameInput = document.getElementById('player-o-name');
     
     if (!namesModal) {
-        console.error("Names modal element not found!");
+        console.error("Names modal not found");
         return;
     }
     
-    // Set the inputs to current values (empty if default)
+    // Set input values (empty if default)
     if (playerXNameInput) playerXNameInput.value = playerXName === 'Player X' ? '' : playerXName;
     if (playerONameInput) playerONameInput.value = playerOName === 'Player O' ? '' : playerOName;
     
-    // Set temp values
-    tempPlayerXName = playerXName;
-    tempPlayerOName = playerOName;
-    
-    // Display the modal
+    // Show the modal
     namesModal.style.display = 'block';
 }
 
 // Close the player names modal
 export function closeNamesModal() {
-    const namesModal = getElement('names-modal');
+    const namesModal = document.getElementById('names-modal');
     if (namesModal) {
         namesModal.style.display = 'none';
     }
 }
 
-// Update X player name (temporary)
-function updatePlayerXName() {
-    const playerXNameInput = getElement('player-x-name');
-    if (playerXNameInput) {
-        tempPlayerXName = playerXNameInput.value.trim() || 'Player X';
-    }
-}
-
-// Update O player name (temporary)
-function updatePlayerOName() {
-    const playerONameInput = getElement('player-o-name');
-    if (playerONameInput) {
-        tempPlayerOName = playerONameInput.value.trim() || 'Player O';
-    }
-}
-
-// Save the player name selections
-function savePlayerNames() {
-    // Set the names
-    playerXName = tempPlayerXName;
-    playerOName = tempPlayerOName;
+// Save player names
+export function savePlayerNames() {
+    console.log("Saving player names");
     
-    // Update the game status with current player
-    if (isGameActive()) {
-        const currentPlayerSymbol = getCurrentPlayer();
-        const currentPlayerName = currentPlayerSymbol === 'X' ? playerXName : playerOName;
-        updateGameStatus(`${currentPlayerName}'s turn`);
+    const playerXNameInput = document.getElementById('player-x-name');
+    const playerONameInput = document.getElementById('player-o-name');
+    
+    if (!playerXNameInput || !playerONameInput) {
+        console.error("Player name inputs not found");
+        return;
     }
+    
+    // Get input values with fallback to defaults
+    playerXName = (playerXNameInput.value.trim() || 'Player X');
+    playerOName = (playerONameInput.value.trim() || 'Player O');
     
     // Save to localStorage
     localStorage.setItem('playerXName', playerXName);
     localStorage.setItem('playerOName', playerOName);
     
+    // Update game status if needed
+    if (isGameActive()) {
+        const currentPlayer = getCurrentPlayer();
+        const currentPlayerName = getPlayerName(currentPlayer);
+        updateGameStatus(`${currentPlayerName}'s turn`);
+    }
+    
+    // Update score display names
+    updateScorePlayerNames();
+    
     // Close the modal
     closeNamesModal();
 }
 
-// Get the name of a specific player by symbol
-export function getPlayerName(symbol) {
-    return symbol === 'X' ? playerXName : playerOName;
-}
-
 // Load saved player names
 export function loadSavedNames() {
-    const savedPlayerXName = localStorage.getItem('playerXName');
-    const savedPlayerOName = localStorage.getItem('playerOName');
+    console.log("Loading saved player names");
     
-    if (savedPlayerXName) {
-        playerXName = savedPlayerXName;
-    }
+    const savedXName = localStorage.getItem('playerXName');
+    const savedOName = localStorage.getItem('playerOName');
     
-    if (savedPlayerOName) {
-        playerOName = savedPlayerOName;
-    }
+    if (savedXName) playerXName = savedXName;
+    if (savedOName) playerOName = savedOName;
+}
+
+// Get player name by symbol
+export function getPlayerName(symbol) {
+    return symbol === 'X' ? playerXName : playerOName;
 }

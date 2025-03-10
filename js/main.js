@@ -1,18 +1,32 @@
-// Main entry point for the Tic-Tac-Toe game
-import { initializeGame, handleCellClick, restartGame } from './game-logic.js';
+// main.js - Main Entry Point for the Tic-Tac-Toe Game
+import { initializeGame } from './game-logic.js';
 import { setupUIListeners } from './ui-controller.js';
 import { loadPreferences } from './preferences.js';
 import { setupColorSettings } from './color-settings.js';
 import { setupPlayerNames } from './player-names.js';
+import { initializeScoreTracker } from './score-tracker.js';
+import { setupTheme } from './theme.js';
+
+console.log("Main module initializing");
 
 // When the DOM is loaded, initialize the game
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Initializing Tic-Tac-Toe game...');
+    console.log("DOM loaded");
+    
+    // First set up the theme (prevent flash of wrong theme)
+    setupTheme();
+    
+    // Load saved preferences (colors, names)
+    loadPreferences();
+    
+    // Initialize the score tracker
+    initializeScoreTracker();
     
     // Initialize the game state and board
     initializeGame();
     
-    // Set up all event listeners
+    // Set up all UI event listeners - this must come after other initializations
+    // to make sure we don't have duplicate event listeners
     setupUIListeners();
     
     // Set up color customization
@@ -20,9 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Set up player names customization
     setupPlayerNames();
-    
-    // Load saved preferences
-    loadPreferences();
     
     console.log('Game initialization complete');
 });

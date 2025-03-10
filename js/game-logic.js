@@ -1,13 +1,15 @@
-// Core game mechanics for Tic-Tac-Toe
-import { updateGameStatus } from './ui-controller.js';
+// game-logic.js - Game Logic Module
 import { getPlayerName } from './player-names.js';
+import { incrementScore } from './score-tracker.js';
+
+console.log("Game logic loading");
 
 // Game state variables
 let currentPlayer = 'X';
 let gameState = ['', '', '', '', '', '', '', '', ''];
 let gameActive = true;
 
-// Constants
+// Winning conditions
 const winningConditions = [
     [0, 1, 2], // top row
     [3, 4, 5], // middle row
@@ -21,19 +23,22 @@ const winningConditions = [
 
 // Initialize the game
 export function initializeGame() {
-    const cells = document.querySelectorAll('.cell');
+    console.log("Initializing game");
     
-    // Add click listeners to each cell
+    // Add event listeners to cells
+    const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
         cell.addEventListener('click', handleCellClick);
     });
     
-    // Set initial game status
-    updateGameStatus(getPlayerName('X') + "'s turn");
+    // Initialize game status text
+    updateGameStatus(`${getPlayerName('X')}'s turn`);
 }
 
 // Handle player move
 export function handleCellClick(e) {
+    console.log("Cell clicked");
+    
     const clickedCell = e.target;
     const cellIndex = parseInt(clickedCell.getAttribute('data-index'));
     
@@ -73,10 +78,15 @@ function checkResult() {
     }
     
     if (roundWon) {
-        // Use player name instead of default "Player X/O"
+        // Get player name
         const winnerName = getPlayerName(currentPlayer);
         updateGameStatus(`${winnerName} wins!`);
         gameActive = false;
+        
+        console.log(`Game won by ${currentPlayer}, updating score...`);
+        
+        // Update score for winner
+        incrementScore(currentPlayer);
         
         // Highlight winning cells
         winningLine.forEach(index => {
@@ -91,6 +101,12 @@ function checkResult() {
     if (isDraw) {
         updateGameStatus('Game ended in a draw!');
         gameActive = false;
+        
+        console.log('Game ended in draw, updating score...');
+        
+        // Update score for draw
+        incrementScore('draw');
+        
         return;
     }
     
@@ -102,25 +118,42 @@ function checkResult() {
 
 // Restart the game
 export function restartGame() {
+    console.log("Restarting game");
+    
     currentPlayer = 'X';
     gameState = ['', '', '', '', '', '', '', '', ''];
     gameActive = true;
     
-    const cells = document.querySelectorAll('.cell');
-    
     // Reset the board
+    const cells = document.querySelectorAll('.cell');
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
     cells.forEach(cell => {
         cell.textContent = '';
         cell.classList.remove('x', 'o');
-        cell.style.backgroundColor = 'white';
+        
+        // Set appropriate background color based on current theme
+        if (isDarkMode) {
+            cell.style.backgroundColor = '#444'; // Dark mode cell color
+        } else {
+            cell.style.backgroundColor = 'white'; // Light mode cell color
+        }
     });
     
-    // Update status with current player
+    // Update game status
     const currentPlayerName = getPlayerName('X');
     updateGameStatus(`${currentPlayerName}'s turn`);
 }
 
-// Expose game state for other modules
+// Update game status text
+export function updateGameStatus(message) {
+    const status = document.getElementById('status');
+    if (status) {
+        status.textContent = message;
+    }
+}
+
+// Getters for game state
 export function getCurrentPlayer() {
     return currentPlayer;
 }

@@ -1,9 +1,9 @@
-// Player color customization functionality
-import { getElement } from './ui-controller.js';
+// color-settings.js - Color Settings Module
+console.log("Color settings loading");
 
 // Default colors
-let xColor = '#e74c3c';
-let oColor = '#3498db';
+let xColor = '#e74c3c'; // Default red
+let oColor = '#3498db'; // Default blue
 let xColorDark = '#ff6b6b';
 let oColorDark = '#5dade2';
 
@@ -13,16 +13,23 @@ let tempOColor = oColor;
 
 // Set up color settings UI and listeners
 export function setupColorSettings() {
-    const colorModal = getElement('color-modal');
-    const closeColorsBtn = getElement('close-colors');
-    const saveColorsBtn = getElement('save-colors-btn');
-    const xColorSelect = getElement('x-color-select');
-    const oColorSelect = getElement('o-color-select');
+    console.log("Setting up color settings");
     
-    // Initialize color previews
-    updateColorPreviews();
+    const colorSettingsBtn = document.getElementById('color-settings-btn');
+    const closeColorsBtn = document.getElementById('close-colors');
+    const saveColorsBtn = document.getElementById('save-colors-btn');
+    
+    // Load saved colors
+    loadSavedColors();
+    
+    // Apply initial colors
+    applyColors();
     
     // Set up event listeners
+    if (colorSettingsBtn) {
+        colorSettingsBtn.addEventListener('click', openColorModal);
+    }
+    
     if (closeColorsBtn) {
         closeColorsBtn.addEventListener('click', closeColorModal);
     }
@@ -31,6 +38,10 @@ export function setupColorSettings() {
         saveColorsBtn.addEventListener('click', saveColors);
     }
     
+    // Set up color select listeners
+    const xColorSelect = document.getElementById('x-color-select');
+    const oColorSelect = document.getElementById('o-color-select');
+    
     if (xColorSelect) {
         xColorSelect.addEventListener('change', updateXColorPreview);
     }
@@ -38,49 +49,51 @@ export function setupColorSettings() {
     if (oColorSelect) {
         oColorSelect.addEventListener('change', updateOColorPreview);
     }
-    
-    // Apply default colors using CSS variables
-    applyColors();
 }
 
-// Open the color settings modal
+// Open color settings modal
 export function openColorModal() {
-    const colorModal = getElement('color-modal');
-    const xColorSelect = getElement('x-color-select');
-    const oColorSelect = getElement('o-color-select');
+    console.log("Opening color modal");
+    
+    const colorModal = document.getElementById('color-modal');
+    const xColorSelect = document.getElementById('x-color-select');
+    const oColorSelect = document.getElementById('o-color-select');
+    const xColorPreview = document.getElementById('x-color-preview');
+    const oColorPreview = document.getElementById('o-color-preview');
     
     if (!colorModal) {
-        console.error("Color modal element not found!");
+        console.error("Color modal not found");
         return;
     }
     
-    // Set the dropdowns to current values
+    // Set current values
     if (xColorSelect) xColorSelect.value = xColor;
     if (oColorSelect) oColorSelect.value = oColor;
     
-    // Update previews
-    updateColorPreviews();
+    // Update preview colors
+    if (xColorPreview) xColorPreview.style.backgroundColor = xColor;
+    if (oColorPreview) oColorPreview.style.backgroundColor = oColor;
     
-    // Set temp values
+    // Set temporary colors
     tempXColor = xColor;
     tempOColor = oColor;
     
-    // Display the modal
+    // Show the modal
     colorModal.style.display = 'block';
 }
 
-// Close the color settings modal
+// Close color settings modal
 export function closeColorModal() {
-    const colorModal = getElement('color-modal');
+    const colorModal = document.getElementById('color-modal');
     if (colorModal) {
         colorModal.style.display = 'none';
     }
 }
 
-// Update X player color preview
+// Update X color preview
 function updateXColorPreview() {
-    const xColorSelect = getElement('x-color-select');
-    const xColorPreview = getElement('x-color-preview');
+    const xColorSelect = document.getElementById('x-color-select');
+    const xColorPreview = document.getElementById('x-color-preview');
     
     if (xColorSelect && xColorPreview) {
         tempXColor = xColorSelect.value;
@@ -88,10 +101,10 @@ function updateXColorPreview() {
     }
 }
 
-// Update O player color preview
+// Update O color preview
 function updateOColorPreview() {
-    const oColorSelect = getElement('o-color-select');
-    const oColorPreview = getElement('o-color-preview');
+    const oColorSelect = document.getElementById('o-color-select');
+    const oColorPreview = document.getElementById('o-color-preview');
     
     if (oColorSelect && oColorPreview) {
         tempOColor = oColorSelect.value;
@@ -99,23 +112,11 @@ function updateOColorPreview() {
     }
 }
 
-// Update both color previews
-function updateColorPreviews() {
-    const xColorPreview = getElement('x-color-preview');
-    const oColorPreview = getElement('o-color-preview');
-    
-    if (xColorPreview) {
-        xColorPreview.style.backgroundColor = xColor;
-    }
-    
-    if (oColorPreview) {
-        oColorPreview.style.backgroundColor = oColor;
-    }
-}
-
-// Save the color selections
+// Save color choices
 function saveColors() {
-    // Set the colors
+    console.log("Saving colors");
+    
+    // Update colors
     xColor = tempXColor;
     oColor = tempOColor;
     
@@ -123,10 +124,10 @@ function saveColors() {
     xColorDark = getLighterColor(xColor);
     oColorDark = getLighterColor(oColor);
     
-    // Apply the colors
+    // Apply colors to CSS variables
     applyColors();
     
-    // Save preferences
+    // Save to localStorage
     localStorage.setItem('xColor', xColor);
     localStorage.setItem('xColorDark', xColorDark);
     localStorage.setItem('oColor', oColor);
@@ -136,15 +137,15 @@ function saveColors() {
     closeColorModal();
 }
 
-// Apply colors to the CSS variables
-function applyColors() {
+// Apply colors to CSS variables
+export function applyColors() {
     document.documentElement.style.setProperty('--x-color', xColor);
     document.documentElement.style.setProperty('--x-color-dark', xColorDark);
     document.documentElement.style.setProperty('--o-color', oColor);
     document.documentElement.style.setProperty('--o-color-dark', oColorDark);
 }
 
-// Helper function to create a lighter version of a color for dark mode
+// Create a lighter version of a color for dark mode
 function getLighterColor(hexColor) {
     // Convert hex to RGB
     let r = parseInt(hexColor.slice(1, 3), 16);
@@ -160,17 +161,10 @@ function getLighterColor(hexColor) {
     return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 
-// Getter methods for other modules
-export function getXColor() {
-    return xColor;
-}
-
-export function getOColor() {
-    return oColor;
-}
-
 // Load saved colors
 export function loadSavedColors() {
+    console.log("Loading saved colors");
+    
     const savedXColor = localStorage.getItem('xColor');
     const savedXColorDark = localStorage.getItem('xColorDark');
     const savedOColor = localStorage.getItem('oColor');
@@ -185,21 +179,13 @@ export function loadSavedColors() {
         oColor = savedOColor;
         oColorDark = savedOColorDark || getLighterColor(savedOColor);
     }
-    
-    // Apply colors
-    applyColors();
-    
-    // Update dropdowns if they exist
-    const xColorSelect = getElement('x-color-select');
-    if (xColorSelect) {
-        xColorSelect.value = xColor;
-    }
-    
-    const oColorSelect = getElement('o-color-select');
-    if (oColorSelect) {
-        oColorSelect.value = oColor;
-    }
-    
-    // Update previews
-    updateColorPreviews();
+}
+
+// Get player colors
+export function getXColor() {
+    return xColor;
+}
+
+export function getOColor() {
+    return oColor;
 }

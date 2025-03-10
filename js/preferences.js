@@ -1,6 +1,6 @@
-// Preferences management (localStorage)
-import { getElement, updateGameStatus } from './ui-controller.js';
-import { getCurrentPlayer, isGameActive } from './game-logic.js';
+// preferences.js - Preferences Management Module
+import { getElement } from './ui-controller.js';
+import { updateGameStatus, getCurrentPlayer, isGameActive } from './game-logic.js';
 import { loadSavedColors } from './color-settings.js';
 import { loadSavedNames, getPlayerName } from './player-names.js';
 

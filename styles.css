@@ -65,10 +65,12 @@ body.dark-mode #save-names-btn:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh; /* Changed from height to min-height */
     background-color: #f5f5f5;
     margin: 0;
+    padding: 20px 0; /* Added padding for better spacing */
     transition: background-color 0.3s ease, color 0.3s ease;
+    box-sizing: border-box; /* Ensure padding is included in height calculation */
 }
 
 body.dark-mode {
@@ -464,4 +466,135 @@ body.dark-mode button:hover {
     position: absolute;
     background-color: rgba(50, 50, 50, 0.3);
     z-index: 1;
+}
+
+/* Replace your score display CSS with this enhanced version */
+.score-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+    transition: background-color 0.3s ease;
+    border: 1px solid #ddd; /* Added border for more definition */
+}
+
+body.dark-mode .score-display {
+    background-color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid #444;
+}
+
+.score-item {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 6px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Added subtle border */
+}
+
+/* Specific styling for score items */
+.score-item.x-score {
+    background-color: rgba(231, 76, 60, 0.15);
+}
+
+.score-item.draw-score {
+    background-color: rgba(149, 165, 166, 0.2);
+}
+
+.score-item.o-score {
+    background-color: rgba(52, 152, 219, 0.15);
+}
+
+body.dark-mode .score-item.x-score {
+    background-color: rgba(231, 76, 60, 0.25);
+    border-color: rgba(231, 76, 60, 0.5);
+}
+
+body.dark-mode .score-item.draw-score {
+    background-color: rgba(149, 165, 166, 0.3);
+    border-color: rgba(149, 165, 166, 0.5);
+}
+
+body.dark-mode .score-item.o-score {
+    background-color: rgba(52, 152, 219, 0.25);
+    border-color: rgba(52, 152, 219, 0.5);
+}
+
+.player-symbol {
+    font-size: 1.8rem; /* Larger symbol */
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Added text shadow */
+}
+
+.player-symbol.x {
+    color: var(--x-color, #e74c3c);
+}
+
+.player-symbol.o {
+    color: var(--o-color, #3498db);
+}
+
+.draw-label {
+    font-size: 1.4rem; /* Larger draw label */
+    font-weight: bold;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+}
+
+/* Separate class for score display player names to avoid CSS conflicts */
+.score-display .player-name {
+    font-size: 1rem;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 5px;
+    font-weight: bold; /* Make name bold */
+}
+
+.score-value {
+    font-size: 2rem; /* Larger value */
+    font-weight: bold;
+    margin-top: 5px;
+    color: #333; /* Darker color for better readability */
+}
+
+body.dark-mode .score-value {
+    color: #fff;
+}
+
+/* Make sure Reset Scores button is correctly styled */
+#reset-scores-btn {
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#reset-scores-btn:hover {
+    background-color: #7f8c8d;
+}
+
+body.dark-mode #reset-scores-btn {
+    background-color: #7f8c8d;
+}
+
+body.dark-mode #reset-scores-btn:hover {
+    background-color: #636e72;
 }
