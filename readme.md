@@ -16,7 +16,7 @@ A modern, feature-rich implementation of the classic Tic-Tac-Toe game built with
 
 ## Live Demo
 
-[Play Tic-Tac-Toe Online](https://your-username.github.io/tic-tac-toe) (Update with your actual GitHub Pages URL)
+[Play Tic-Tac-Toe Online](https://sdanzig3.github.io/tic-tac-toe/)
 
 ## How to Play
 
